@@ -2,11 +2,12 @@ import { ArticleForm } from "../../components/ArticleForm";
 import apiClient from '../../services/api-client'
 import { useState, useEffect } from "react";
 import { ArticleThumbnailProps } from "../../components/ArticleThumbnail/ArticleThumbnail.types";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import { Navigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const EditarArquivoPage = () => {
 
+  const navigate = useNavigate();
   const [ artigo, setArtigo ] = useState<ArticleThumbnailProps>();
   const { id } = useParams();
   useEffect(() => {
@@ -22,35 +23,9 @@ export const EditarArquivoPage = () => {
     setArtigo(response.data);
   }
 
-  // async function editarArtigo() {
-  //   const token = localStorage.getItem("access_token");
-  //   const r = await axios.get<ArticleThumbnailProps>(
-  //     `http://3.221.159.196:3307/artigos/24`,
-  //     {
-  //       headers: {
-  //         Authorization : `bearer ${token}`
-  //       },
-  //        data: {
-  //         "titulo": "aaaa",
-  //         "imagem": "",
-  //         "resumo": "",
-  //         "conteudo": ""
-  //       }
-  //     }
-  //   );
-  //   console.log(r.data)
-  // }
-
-  // useEffect(() => {
-  //   editarArtigo()
-  // },[])
-
-
   const handleSubmit = async (artigo: ArticleThumbnailProps) => {
     if (artigo.id) {
-      console.log('=====> devo atualizar o artigo');
-
-      const teste1 = await apiClient.patch(
+      const response = await apiClient.patch(
         `/artigos/${artigo.id}`, {
           "titulo": artigo.titulo,
           "imagem": artigo.imagem,
@@ -58,11 +33,10 @@ export const EditarArquivoPage = () => {
           "conteudo": artigo.conteudo,
         }
       )
-      console.log(teste1.data)
-    } else {
-      console.log('=====> devo criar um novo artigo');
+      navigate("/artigos");
 
-      const teste = await apiClient.post(
+    } else {
+      const response = await apiClient.post(
         `/artigos`, {
           "titulo": artigo.titulo,
           "imagem": artigo.imagem,
@@ -70,13 +44,9 @@ export const EditarArquivoPage = () => {
           "conteudo": artigo.conteudo,
         }
       )
-      console.log(teste.data)
+      navigate("/artigos");
     }
   }
-
-  useEffect(() => {
-    
-  }, [])
 
   return (
     <>
