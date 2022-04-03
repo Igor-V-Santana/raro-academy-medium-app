@@ -12,10 +12,10 @@ export const ArtigosPage = () => {
   }, []);
 
   async function artigos() {
-    const responsee = await apiClient.get(
+    const response = await apiClient.get(
       `/artigos`
     )
-    setArticles(responsee.data)
+    setArticles(response.data)
   }
 
   return (
