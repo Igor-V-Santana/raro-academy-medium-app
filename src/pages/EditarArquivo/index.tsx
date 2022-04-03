@@ -47,23 +47,30 @@ export const EditarArquivoPage = () => {
 
 
   const handleSubmit = async (artigo: ArticleThumbnailProps) => {
-    const token = localStorage.getItem("access_token");
     if (artigo.id) {
       console.log('=====> devo atualizar o artigo');
-      
-      const abcde = await axios.patch(
-        `http://3.221.159.196:3307/artigos/${id}`, {
-          headers: {
-            Authorization: `bearer ${token}`
-          }, data: {
-            titulo: artigo.titulo,
-            imagem: artigo.imagem,
-            resumo: artigo.resumo,
-            conteudo: artigo.conteudo,
-          }
-        })
+
+      const teste1 = await apiClient.patch(
+        `/artigos/${artigo.id}`, {
+          "titulo": artigo.titulo,
+          "imagem": artigo.imagem,
+          "resumo": artigo.resumo,
+          "conteudo": artigo.conteudo,
+        }
+      )
+      console.log(teste1.data)
     } else {
       console.log('=====> devo criar um novo artigo');
+
+      const teste = await apiClient.post(
+        `/artigos`, {
+          "titulo": artigo.titulo,
+          "imagem": artigo.imagem,
+          "resumo": artigo.resumo,
+          "conteudo": artigo.conteudo,
+        }
+      )
+      console.log(teste.data)
     }
   }
 
