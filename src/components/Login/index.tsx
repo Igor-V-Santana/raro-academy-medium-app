@@ -42,11 +42,8 @@ export const Login = () => {
       } else {
         setErro('Erro ao autenticar usuário. Tente novamente mais tarde.');
       }
+      setLoading(false);
     }
-  
-    // repare que o setLoading é chamado após tudo. Ele será executado, seja em
-    // cenário de sucesso, ou de falha.
-    setLoading(false);
   }
 
   return (

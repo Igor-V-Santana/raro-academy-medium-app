@@ -3,6 +3,9 @@ import { Input } from "../Input";
 import { useState, useEffect } from "react";
 import { ArticleThumbnailProps } from "../ArticleThumbnail/ArticleThumbnail.types";
 import { RitchTextEditor } from "../RitchTextEditor";
+import apiClient from "../../services/api-client";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 type ArticleFormProps = {
   article?: ArticleThumbnailProps;
@@ -28,10 +31,11 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
     }
   }, [article]);
 
+
   // criamos um novo evento para este componente: sempre que o usuário 
   // fizer o submit do form, vamos enviar para o componente pai o artigo
   // que deve ser submetido.
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = ( event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (onSubmit) {
       const articleToSubmit = {
@@ -42,7 +46,7 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
         conteudo,
       };
       onSubmit(articleToSubmit as ArticleThumbnailProps)
-    }
+    } 
   }
 
   const transformaImagemEmBase64 = (event: any) => {
@@ -53,6 +57,14 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
       setImagem(event.target.result);
     };
   };
+
+  const navigate = useNavigate();
+
+  const deletarArtigo = async() =>{
+    const id = article?.id
+    const response = await apiClient.delete(`/artigos/${id}`);
+    navigate('/artigos')
+  }
 
   return (
     <div className="grid min-h-screen mx-10 ">
@@ -100,6 +112,7 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
           />
 
           <Button type="submit">Salvar</Button>
+          <button onClick={deletarArtigo} className="btnDelete">Deletar</button>
         </form>
       </div>
     </div>
