@@ -5,9 +5,11 @@ export type ArticleThumbnailProps = {
   resumo: string;
   dataPublicacao: Date;
   tempoLeitura?: string;
+  conteudo?: string;
   autor: {
     nome: string;
     avatar: string;
+    id?: number;
   };
   editavel?: boolean;
 }

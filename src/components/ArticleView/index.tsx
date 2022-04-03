@@ -7,13 +7,13 @@ import './ArticleView.css'
 import { ArticleViewProps } from "./ArticleView.type";
 import { formataData } from "../../helpers/date";
 
-
 export const ArticleView: React.FC<ArticleViewProps> = ({
   article,
   autor,
   dataPublicacao,
 }) => {
   const mdParser = new MarkdownIt();
+  console.log(autor)
   return (
     <>
       <header className="flex flex-row gap-3 items-center ml-20">
