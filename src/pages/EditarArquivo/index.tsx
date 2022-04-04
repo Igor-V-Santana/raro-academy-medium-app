@@ -33,7 +33,7 @@ export const EditarArquivoPage = () => {
           "conteudo": artigo.conteudo,
         }
       )
-      navigate("/artigos");
+      navigate(`/artigos`);
 
     } else {
       const response = await apiClient.post(
@@ -44,7 +44,7 @@ export const EditarArquivoPage = () => {
           "conteudo": artigo.conteudo,
         }
       )
-      navigate("/artigos");
+      navigate(`/artigos`);
     }
   }
 
