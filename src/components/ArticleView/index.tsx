@@ -9,28 +9,28 @@ import { formataData } from "../../helpers/date";
 
 export const ArticleView: React.FC<ArticleViewProps> = ({
   article,
-  autor,
+  // autor,
   dataPublicacao,
+  nome
 }) => {
   const mdParser = new MarkdownIt();
-  console.log(autor)
   return (
     <>
       <header className="flex flex-row gap-3 items-center ml-20">
-        <img src={ autor.avatar } className="rounded-full" style={{ width: '50px', height: '50px' }} />
+        <img src={ nome.autor?.avatar } className="rounded-full" style={{ width: '50px', height: '50px' }} />
         <div className="block">
-          <div>{ autor.nome }</div>
+          <div>{ nome.autor?.nome }</div>
           <div className="text-sm text-gray-500">
             { formataData(dataPublicacao) } · {/* { tempoLeitura } */} 7min de leitura
           </div>
         </div>
       </header>
-      <MdEditor
+      <MdEditor className="flex flex-row gap-3 items-center ml-20"
         style={{ height: '100%' }}
         renderHTML={text => mdParser.render(text)}
         readOnly
         view={{ md: false, menu: false, html: true }}
-        value={ article }
+        value={ nome.conteudo }
       />
     </>
   );

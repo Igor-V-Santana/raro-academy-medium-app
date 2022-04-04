@@ -15,8 +15,8 @@ DefaultArticleViewView.args = {
   article,
   dataPublicacao: faker.date.past(),
   tempoLeitura: `${faker.datatype.number({ min: 1, max: 10 })} min`,
-  autor: {
-    nome: faker.name.firstName(),
-    avatar: faker.image.avatar(),
-  }
+  // autor: {
+  //   nome: faker.name.firstName(),
+  //   avatar: faker.image.avatar(),
+  // }
 };

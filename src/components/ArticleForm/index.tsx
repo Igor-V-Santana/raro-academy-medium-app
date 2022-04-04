@@ -66,6 +66,10 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
     navigate('/artigos')
   }
 
+  const backPage = () => {
+    navigate('/artigos')
+  }
+
   return (
     <div className="grid min-h-screen mx-10 ">
       <div>
@@ -111,8 +115,11 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
             onChange={ setConteudo }
           />
 
-          <Button type="submit">Salvar</Button>
-          <button onClick={deletarArtigo} className="btnDelete">Deletar</button>
+          <div className="flex flex-row items-center gap-10">
+            <Button type="submit">Salvar</Button>
+            <button onClick={backPage} className="btnBack">Voltar</button>
+            <button onClick={deletarArtigo} className="btnDelete">Deletar</button>
+          </div>
         </form>
       </div>
     </div>
