@@ -1,37 +1,38 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { ActivableLink } from '../ActivableLink';
 
 export const Navigation = () => {
 
-  const [isLogin, setIsLogin] = useState(false);
+  const [isAuthenticated, setAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    if(token){
-      setIsLogin(true);
-    }
-  }, [])
+    setAuthenticated(localStorage.getItem("access_token") !== null);
+  }, []);
 
   function logout(){
-    localStorage.clear();
-    setIsLogin(false)
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("id");
+    setAuthenticated(false);
+    navigate('/');
   }
 
-  return (
+  if(!isAuthenticated) {
+    return (
       <>
-        {isLogin ? 
-        <>
-          <Link to="/">HOME</Link>
-          <Link to="/artigos">MEUS ARTIGOS</Link>
-          <Link to="/artigos/novo">NOVO ARTIGO</Link>
-          <Link to="/" onClick={logout}>LOGOUT</Link>
-        </> 
-        : 
-        <>
-          <Link to="/">HOME</Link>
-          <Link to="/login">LOGIN</Link>
-        </>
-      }
+        <ActivableLink to="/">HOME</ActivableLink>
+        <ActivableLink to="/login">LOGIN</ActivableLink>
       </>
+    )
+  }
+
+  return ( 
+        <>
+          <ActivableLink to="/">HOME</ActivableLink>
+          <ActivableLink to="/artigos">MEUS ARTIGOS</ActivableLink>
+          <ActivableLink to="/artigos/novo">NOVO ARTIGO</ActivableLink>
+          <ActivableLink to="/" onClick={logout} type="button">LOGOUT</ActivableLink>
+        </> 
   );
 };
